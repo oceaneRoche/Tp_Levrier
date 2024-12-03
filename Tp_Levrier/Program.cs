@@ -26,6 +26,13 @@ namespace Tp_Levrier
             }
 
             Console.WriteLine("La course est terminée !");
+            Console.WriteLine("\n Classement final :");
+
+            List<int> classement = Levrier.GetClassement();
+            for (int i = 0; i < classement.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. Lévrier {classement[i]}");
+            }
         }
     }
 
