@@ -6,7 +6,7 @@ namespace Tp_Levrier
     class Levrier
     {
         private static Random random = new Random();
-        private static object lockObject = new object();
+        private static Mutex mutexClassement = new Mutex(); 
         private static List<int> classement = new List<int>();
         private int numero;
         private AutoResetEvent eventArrivee;
@@ -32,13 +32,17 @@ namespace Tp_Levrier
                 }
             }          
             eventArrivee.Set();
-            lock (lockObject)
+            mutexClassement.WaitOne();
+            try
             {
                 classement.Add(numero);
             }
+            finally
+            {
+                mutexClassement.ReleaseMutex();
+            }
 
-            Console.WriteLine($"Lévrier {numero} a terminé !");
-            eventArrivee.Set();
+            Console.WriteLine($"Levrier {numero} a termine !");
         }
 
         public static List<int> GetClassement()
